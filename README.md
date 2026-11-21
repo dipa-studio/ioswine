@@ -4,8 +4,6 @@ Run iOS apps on a rooted arm64 Android phone, the way Wine runs Windows programs
 
 Nothing is emulated. The app's arm64 code runs straight on the phone's CPU, on top of Apple's own frameworks from a real iOS image. ioswine replaces the bottom layer: the kernel interface, Mach IPC and the system daemons an iOS app expects to talk to.
 
-![Aidoku running on an Android phone](docs/media/first-pixels.png)
-
 ## Status
 
 The test app is [Aidoku](https://github.com/Aidoku/Aidoku), an open source manga reader. It boots to its first screen, draws through UIKit and SwiftUI, and takes touch input. Tabs switch and the UI redraws on change.
