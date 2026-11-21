@@ -13,7 +13,6 @@ The test app is [Aidoku](https://github.com/Aidoku/Aidoku), an open source manga
 Still broken:
 
 - random crashes after a while of tapping around (a memory or locking bug that is still being hunted)
-- SF Symbols icons are missing
 - networking beyond the basics
 - the GPU path: CoreAnimation renders on the CPU for now
 
