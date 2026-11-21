@@ -1,0 +1,25 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ arm64-ios ]
+install-name:    '/System/Library/Frameworks/CoreFoundation.framework/CoreFoundation'
+current-version: 5026.6.7
+exports:
+  - targets:     [ arm64-ios ]
+    symbols:     [ _CFURLCreateFromFileSystemRepresentation,
+                   _CFStringCreateWithCString,
+                   _CFRelease,
+                   _CFArrayGetCount,
+                   _CFArrayGetValueAtIndex,
+                   _CFStringGetCString,
+                   _CFDataCreateMutable,
+                   _CFDataGetLength,
+                   _CFDataGetBytePtr,
+                   _kCFAllocatorDefault,
+                   _CFRunLoopGetCurrent,
+                   _CFRunLoopRun,
+                   _CFRunLoopStop,
+                   _CFAbsoluteTimeGetCurrent,
+                   _CFRunLoopTimerCreate,
+                   _CFRunLoopAddTimer,
+                   _kCFRunLoopDefaultMode ]
+...

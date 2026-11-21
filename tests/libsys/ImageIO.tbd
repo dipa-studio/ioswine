@@ -1,0 +1,13 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ arm64-ios ]
+install-name:    '/System/Library/Frameworks/ImageIO.framework/ImageIO'
+current-version: 1
+exports:
+  - targets:     [ arm64-ios ]
+    symbols:     [ _CGImageDestinationCreateWithURL,
+                   _CGImageDestinationCreateWithData,
+                   _CGImageDestinationCopyTypeIdentifiers,
+                   _CGImageDestinationAddImage,
+                   _CGImageDestinationFinalize ]
+...

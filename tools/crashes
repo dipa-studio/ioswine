@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+# crashes - pull every run log from the phone and list crashes grouped by site.
+# usage: tools/crashes            pull new logs + print summary
+#        tools/crashes show N     print crash N from the last summary with a symbolicated backtrace
+set -u
+REPO=$(cd "$(dirname "$(readlink -f "$0")")/.." && pwd)
+cd "$REPO"
+OUT=build/devlogs
+CACHE=vendor-local/23G90__iPhone17,3/dyld_shared_cache_arm64e
+SYMS=$OUT/.syms   # addr -> symbol cache
+mkdir -p "$OUT"; touch "$SYMS"
+
+sym() {  # cached ipsw a2s
+    local a=$1 s
+    s=$(grep -m1 "^$a " "$SYMS" | cut -d' ' -f2-)
+    if [ -z "$s" ]; then
+        s=$(ipsw dyld a2s "$CACHE" "$a" 2>/dev/null | tail -1 | sed 's/^0x[0-9a-f]*: //')
+        [ -z "$s" ] && s="?"
+        echo "$a $s" >> "$SYMS"
+    fi
+    echo "$s"
+}
+
+if [ "${1:-}" = "show" ]; then
+    f=$(sed -n "${2:?usage: tools/crashes show N}p" "$OUT/.index")
+    [ -n "$f" ] || { echo "no crash $2"; exit 1; }
+    echo "== $f"
+    grep -a -B3 'lsk CRASH' "$OUT/$f" | grep -avE 'lsk (CRASH|REGS|ALLREGS)' | tail -3
+    grep -a -E 'reason:|Terminating' "$OUT/$f" | head -2
+    grep -a -A40 'lsk CRASH' "$OUT/$f" | grep -aoE '0x0000000(1[89a-f][0-9a-f]{7})' | sed 's/0x0000000/0x/' |
+        awk '!s[$0]++' | head -20 | while read -r a; do printf '  %s  %s\n' "$a" "$(sym "$a")"; done
+    exit 0
+fi
+
+# pull logs not yet on disk
+have=$(ls "$OUT" 2>/dev/null)
+for f in $(timeout 30 tools/dev.sh root "ls /data/local/tmp/ioswine/runs" 2>/dev/null | grep -E '^run-[0-9]+\.log$'); do
+    echo "$have" | grep -qx "$f" && continue
+    timeout 60 tools/dev.sh pull "/data/local/tmp/ioswine/runs/$f" "$OUT/$f" >/dev/null 2>&1 && echo "pulled $f"
+done
+
+# summary: one line per crashing run, grouped by pc/lr site
+: > "$OUT/.index"
+n=0
+for f in $(ls "$OUT" | grep -E '^run-[0-9]+\.log$' | sort -r); do
+    line=$(grep -a -m1 'lsk CRASH' "$OUT/$f") || continue
+    pc=$(echo "$line" | grep -oE 'pc=0x[0-9a-f]+' | sed 's/pc=0x0*/0x/')
+    lr=$(echo "$line" | grep -oE 'lr=0x[0-9a-f]+' | sed 's/lr=0x0*/0x/')
+    n=$((n + 1)); echo "$f" >> "$OUT/.index"
+    when=$(date -d "@${f//[^0-9]/}" '+%m-%d %H:%M' 2>/dev/null)
+    printf '%3d  %s  %-45.45s <- %.50s\n' "$n" "$when" "$(sym "$pc")" "$(sym "$lr")"
+done > "$OUT/.summary"
+total=$(ls "$OUT" | grep -cE '^run-[0-9]+\.log$')
+echo "== $n crashes in $total runs (newest first). Details: tools/crashes show N"
+cat "$OUT/.summary"
+echo "== by site"
+sed -E 's/^ *[0-9]+  [0-9-]+ [0-9:]+  //' "$OUT/.summary" | sort | uniq -c | sort -rn | head -15

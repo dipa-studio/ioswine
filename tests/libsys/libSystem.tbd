@@ -1,0 +1,36 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ arm64-ios ]
+install-name:    '/usr/lib/libSystem.B.dylib'
+current-version: 1356
+exports:
+  - targets:     [ arm64-ios ]
+    symbols:     [ _printf, _puts, _malloc, _free, _calloc, _realloc,
+                   _pthread_create, _pthread_join, _pthread_self, _exit,
+                   _write, _strlen, _memset, _snprintf, ___stdoutp, _fflush,
+                   ___error, _getcwd, _open, _close, _usleep, _unlink,
+                   _mach_task_self_, _bootstrap_port, _bootstrap_look_up,
+                   _bootstrap_register2, _bootstrap_check_in2,
+                   _mach_port_allocate, _mach_port_deallocate,
+                   _mach_port_destroy, _mach_port_insert_right, _mach_port_type,
+                   _mach_port_get_refs, _mach_port_insert_member, _mach_port_extract_member,
+                   _mach_port_request_notification, _mach_msg, _mig_get_reply_port,
+                   _mig_dealloc_reply_port, _mach_absolute_time, _mach_timebase_info,
+                   _vm_allocate, _vm_deallocate, _mk_timer_create, _mk_timer_destroy,
+                   _mk_timer_arm, _mk_timer_cancel,
+                   _pipe, _read,
+                   __dispatch_main_q, __dispatch_source_type_timer, __dispatch_source_type_read,
+                   _dispatch_get_global_queue, _dispatch_queue_create,
+                   _dispatch_semaphore_create, _dispatch_semaphore_wait, _dispatch_semaphore_signal,
+                   _dispatch_time, _dispatch_async_f, _dispatch_after_f,
+                   _dispatch_group_create, _dispatch_group_async_f, _dispatch_group_wait,
+                   _dispatch_source_create, _dispatch_source_set_timer,
+                   _dispatch_source_set_event_handler_f, _dispatch_source_cancel, _dispatch_resume,
+                   _dispatch_set_context,
+                   _xpc_connection_create_mach_service, _xpc_connection_set_event_handler,
+                   _xpc_connection_resume, _xpc_connection_send_message_with_reply_sync,
+                   _xpc_connection_cancel, _xpc_dictionary_create, _xpc_dictionary_set_int64,
+                   _xpc_dictionary_set_string, _xpc_dictionary_get_int64, _xpc_dictionary_get_bool,
+                   _xpc_dictionary_get_string, _xpc_release, __NSConcreteGlobalBlock, __NSConcreteStackBlock,
+                   _dlsym, _ioswine_present_frame ]
+...

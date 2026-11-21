@@ -1,0 +1,13 @@
+[touch] reader started
+[touch] sender id 2660229795 ctx=2660229795
+[touch] fetcher thread present? 1
+[touch] down x=77 y=787 id=0
+[touch] hid-built down nx=213 ny=984 id=0 wire_ts=35255469114101
+[touch] queued via _receiveHIDEvent:
+[touch] queue filtered=0 raw=-
+[touch] sender id 2660229795 ctx=2660229795
+[touch] fetcher thread present? 1
+[touch] up x=77 y=787 id=0
+[touch] hid-built up nx=213 ny=984 id=0 wire_ts=35255505986289
+[touch] queued via _receiveHIDEvent:
+[touch] queue filtered=0 raw=-

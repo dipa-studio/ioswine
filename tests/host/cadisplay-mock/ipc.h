@@ -1,0 +1,362 @@
+#pragma once
+#include <stdint.h>
+#include <stddef.h>
+
+typedef uint32_t mach_port_t;
+typedef uint32_t mach_port_name_t;
+typedef uint32_t mach_port_right_t;
+typedef uint32_t mach_port_type_t;
+typedef uint32_t mach_port_urefs_t;
+typedef uint32_t mach_port_delta_t;
+typedef uint64_t mach_port_context_t;
+typedef uint32_t mach_port_seqno_t;
+typedef uint32_t mach_port_mscount_t;
+typedef uint32_t mach_msg_bits_t;
+typedef uint32_t mach_msg_size_t;
+typedef uint32_t mach_msg_id_t;
+typedef int32_t  mach_msg_return_t;
+typedef uint32_t mach_msg_timeout_t;
+typedef uint32_t mach_msg_type_name_t;
+typedef uint32_t mach_msg_descriptor_type_t;
+typedef int      kern_return_t;
+
+#define MACH_PORT_NULL               ((mach_port_t)0)
+#define MACH_PORT_DEAD               ((mach_port_t)~0U)
+
+/* Rights */
+#define MACH_PORT_RIGHT_SEND         0
+#define MACH_PORT_RIGHT_RECEIVE      1
+#define MACH_PORT_RIGHT_SEND_ONCE    2
+#define MACH_PORT_RIGHT_PORT_SET     3
+#define MACH_PORT_RIGHT_DEAD_NAME    4
+#define MACH_PORT_RIGHT_LABELHINT    5
+#define MACH_PORT_RIGHT_NUMBER       6
+
+/* Types */
+#define MACH_PORT_TYPE_NONE          0x00000000
+#define MACH_PORT_TYPE_SEND          0x00010000
+#define MACH_PORT_TYPE_RECEIVE       0x00020000
+#define MACH_PORT_TYPE_SEND_ONCE     0x00040000
+#define MACH_PORT_TYPE_PORT_SET      0x00080000
+#define MACH_PORT_TYPE_DEAD_NAME     0x00100000
+
+#define MACH_PORT_TYPE(right)        (1 << ((right) + 16))
+
+/* Dispositions */
+#define MACH_MSG_TYPE_MOVE_RECEIVE   16
+#define MACH_MSG_TYPE_MOVE_SEND      17
+#define MACH_MSG_TYPE_MOVE_SEND_ONCE 18
+#define MACH_MSG_TYPE_COPY_SEND      19
+#define MACH_MSG_TYPE_MAKE_SEND      20
+#define MACH_MSG_TYPE_MAKE_SEND_ONCE 21
+#define MACH_MSG_TYPE_PORT_NAME      15
+
+#define MACH_MSG_TYPE_PORT_RECEIVE   16
+#define MACH_MSG_TYPE_PORT_SEND      17
+#define MACH_MSG_TYPE_PORT_SEND_ONCE 18
+
+/* Header bits */
+#define MACH_MSGH_BITS_ZERO          0x00000000
+#define MACH_MSGH_BITS_REMOTE_MASK   0x000000ff
+#define MACH_MSGH_BITS_LOCAL_MASK    0x0000ff00
+#define MACH_MSGH_BITS_VOUCHER_MASK  0x00ff0000
+#define MACH_MSGH_BITS_PORTS_MASK    (MACH_MSGH_BITS_REMOTE_MASK | MACH_MSGH_BITS_LOCAL_MASK | MACH_MSGH_BITS_VOUCHER_MASK)
+#define MACH_MSGH_BITS_COMPLEX       0x80000000
+
+#define MACH_MSGH_BITS(remote, local) \
+    ((mach_msg_bits_t)(remote) | ((mach_msg_bits_t)(local) << 8))
+
+#define MACH_MSGH_BITS_REMOTE(bits)  ((bits) & 0xff)
+#define MACH_MSGH_BITS_LOCAL(bits)   (((bits) >> 8) & 0xff)
+#define MACH_MSGH_BITS_VOUCHER(bits) (((bits) >> 16) & 0xff)
+
+/* Descriptors */
+#define MACH_MSG_PORT_DESCRIPTOR             0
+#define MACH_MSG_OOL_DESCRIPTOR              1
+#define MACH_MSG_OOL_PORTS_DESCRIPTOR        2
+#define MACH_MSG_OOL_VOLATILE_DESCRIPTOR     3
+#define MACH_MSG_GUARDED_PORT_DESCRIPTOR     4
+
+/* Options */
+#define MACH_MSG_OPTION_NONE         0x00000000
+#define MACH_SEND_MSG                0x00000001
+#define MACH_RCV_MSG                 0x00000002
+#define MACH_RCV_LARGE               0x00000004
+#define MACH_RCV_LARGE_IDENTITY      0x00000008
+#define MACH_SEND_TIMEOUT            0x00000010
+#define MACH_SEND_INTERRUPT          0x00000040
+#define MACH_SEND_NOTIFY             0x00000080
+#define MACH_SEND_ALWAYS             0x00010000
+#define MACH_SEND_TRAILER            0x00020000
+#define MACH_SEND_NOIMPORTANCE       0x00040000
+#define MACH_SEND_SYNC_OVERRIDE      0x00100000
+#define MACH_SEND_PROPAGATE_QOS      0x00200000
+#define MACH_SEND_SYNC_USE_THRPRI    0x00400000
+#define MACH_RCV_TIMEOUT             0x00000100
+#define MACH_RCV_NOTIFY              0x00000200
+#define MACH_RCV_INTERRUPT           0x00000400
+#define MACH_RCV_VOUCHER             0x00000800
+#define MACH_RCV_OVERWRITE           0x00001000
+#define MACH_RCV_SYNC_WAIT           0x00004000
+#define MACH_RCV_SYNC_PEEK           0x00008000
+
+#define MACH_MSG_TIMEOUT_NONE        0
+
+/* Kern return codes */
+#define KERN_SUCCESS                 0
+#define KERN_INVALID_ADDRESS         1
+#define KERN_PROTECTION_FAILURE      2
+#define KERN_NO_SPACE                3
+#define KERN_INVALID_ARGUMENT        4
+#define KERN_FAILURE                 5
+#define KERN_RESOURCE_SHORTAGE       6
+#define KERN_NOT_RECEIVER            7
+#define KERN_NO_ACCESS               8
+#define KERN_MEMORY_FAILURE          9
+#define KERN_MEMORY_ERROR            10
+#define KERN_ALREADY_IN_SET          11
+#define KERN_NOT_IN_SET              12
+#define KERN_NAME_EXISTS             13
+#define KERN_ABORTED                 14
+#define KERN_INVALID_NAME            15
+#define KERN_INVALID_TASK            16
+#define KERN_INVALID_RIGHT           17
+#define KERN_INVALID_VALUE           18
+#define KERN_UREFS_OVERFLOW          19
+#define KERN_INVALID_CAPABILITY      20
+#define KERN_RIGHT_EXISTS            21
+#define KERN_INVALID_HOST            22
+#define KERN_MEMORY_PRESENT          23
+
+/* mach_msg errors */
+#define MACH_MSG_SUCCESS             0x00000000
+#define MACH_SEND_MSG_TOO_SMALL      0x10000001
+#define MACH_SEND_NO_BUFFER          0x10000002
+#define MACH_SEND_INVALID_DEST       0x10000003
+#define MACH_SEND_TIMED_OUT          0x10000004
+#define MACH_SEND_INTERRUPTED        0x10000007
+#define MACH_SEND_INVALID_REPLY      0x10000009
+#define MACH_SEND_INVALID_RIGHT      0x1000000a
+#define MACH_SEND_INVALID_TYPE       0x1000000f
+#define MACH_SEND_INVALID_HEADER     0x10000010
+
+#define MACH_RCV_IN_PROGRESS         0x10004001
+#define MACH_RCV_INVALID_NAME        0x10004002
+#define MACH_RCV_TIMED_OUT           0x10004003
+#define MACH_RCV_TOO_LARGE           0x10004004
+#define MACH_RCV_INTERRUPTED         0x10004005
+#define MACH_RCV_PORT_CHANGED        0x10004006
+#define MACH_RCV_INVALID_CRED        0x10004007
+#define MACH_RCV_INVALID_SAVE_AREA   0x10004008
+#define MACH_RCV_PORT_DIED           0x10004009
+#define MACH_RCV_IN_SET              0x1000400a
+#define MACH_RCV_HEADER_ERROR        0x1000400b
+#define MACH_RCV_BODY_ERROR          0x1000400c
+#define MACH_RCV_INVALID_TYPE        0x1000400d
+#define MACH_RCV_SCATTER_SMALL       0x1000400e
+#define MACH_RCV_INVALID_TRAILER     0x1000400f
+
+/* Notifications */
+#define MACH_NOTIFY_FIRST            0100
+#define MACH_NOTIFY_PORT_DELETED     (MACH_NOTIFY_FIRST + 001)
+#define MACH_NOTIFY_PORT_DESTROYED   (MACH_NOTIFY_FIRST + 005)
+#define MACH_NOTIFY_NO_SENDERS       (MACH_NOTIFY_FIRST + 006) /* 0x46 */
+#define MACH_NOTIFY_SEND_ONCE        (MACH_NOTIFY_FIRST + 007)
+#define MACH_NOTIFY_DEAD_NAME        (MACH_NOTIFY_FIRST + 010) /* 0x48 */
+
+/* Attributes */
+#define MACH_PORT_LIMITS_INFO        1
+#define MACH_PORT_RECEIVE_STATUS     2
+#define MACH_PORT_DNREQUESTS_SIZE    3
+#define MACH_PORT_TEMPOWNER          4
+#define MACH_PORT_IMPORTANCE_RECEIVER 5
+#define MACH_PORT_DENAP_RECEIVER     6
+#define MACH_PORT_INFO_EXT           7
+#define MACH_PORT_GUARD_INFO         8
+#define MACH_PORT_SERVICE_THROTTLED  9
+
+#define MACH_PORT_QLIMIT_DEFAULT     5
+#define MACH_PORT_QLIMIT_LARGE       1024
+
+/* Construct options */
+#define MPO_CONTEXT_AS_GUARD         0x0001
+#define MPO_QLIMIT                   0x0002
+#define MPO_TEMPOWNER                0x0004
+#define MPO_IMPORTANCE_RECEIVER       0x0008
+#define MPO_INSERT_SEND_RIGHT        0x0010
+#define MPO_STRICT                   0x0020
+#define MPO_DENAP_RECEIVER           0x0040
+#define MPO_IMMOVABLE_RECEIVE        0x0080
+#define MPO_FILTER_MSG               0x0100
+#define MPO_TG_BLOCK_TRACKING        0x0200
+#define MPO_SERVICE_PORT             0x0400
+#define MPO_CONNECTION_PORT          0x0800
+#define MPO_REPLY_PORT               0x1000
+#define MPO_ENFORCE_REPLY_PORT_SEMANTICS 0x2000
+#define MPO_PROVISIONAL_REPLY_PORT   0x4000
+#define MPO_PROVISIONAL_ID_PROT_OPTOUT 0x8000
+
+/* Structs */
+typedef struct {
+    mach_msg_bits_t       msgh_bits;
+    mach_msg_size_t       msgh_size;
+    mach_port_t           msgh_remote_port;
+    mach_port_t           msgh_local_port;
+    mach_port_name_t      msgh_voucher_port;
+    mach_msg_id_t         msgh_id;
+} mach_msg_header_t;
+
+typedef struct {
+    mach_msg_size_t       msgh_descriptor_count;
+} mach_msg_body_t;
+
+typedef struct {
+    mach_msg_header_t     header;
+    mach_msg_body_t       body;
+} mach_msg_base_t;
+
+typedef struct {
+    mach_port_t           name;
+    mach_msg_size_t       pad1;
+    uint16_t              pad2;
+    uint8_t               disposition;
+    uint8_t               type; /* MACH_MSG_PORT_DESCRIPTOR */
+} mach_msg_port_descriptor_t;
+
+typedef struct {
+    uint64_t              address;
+    uint8_t               deallocate;
+    uint8_t               copy;
+    uint8_t               pad1;
+    uint8_t               type; /* MACH_MSG_OOL_DESCRIPTOR */
+    uint32_t              size;
+} mach_msg_ool_descriptor_t;
+
+typedef struct {
+    uint32_t              mpl_qlimit;
+} mach_port_limits_t;
+
+typedef struct {
+    mach_port_t           mps_pset;
+    uint32_t              mps_seqno;
+    uint32_t              mps_qlimit;
+    uint32_t              mps_msgcount;
+    uint32_t              mps_mscount;
+    uint32_t              mps_srights;
+    uint32_t              mps_sorights;
+    uint32_t              mps_nsrequest;
+    uint32_t              mps_flags;
+} mach_port_status_t;
+
+typedef struct {
+    uint32_t              flags;
+    mach_port_limits_t    mpl;
+    uint64_t              reserved[2];
+} mach_port_options_t;
+
+typedef struct {
+    uint8_t  mig_vers;
+    uint8_t  if_vers;
+    uint8_t  reserved1;
+    uint8_t  mig_encoding;
+    uint8_t  int_rep;
+    uint8_t  char_rep;
+    uint8_t  float_rep;
+    uint8_t  reserved2;
+} NDR_record_t;
+
+typedef struct {
+    mach_msg_header_t Head;
+    NDR_record_t      NDR;
+    kern_return_t     RetCode;
+} mig_reply_error_t;
+
+typedef struct {
+    mach_msg_header_t not_header;
+    NDR_record_t      NDR;
+    mach_port_mscount_t not_count;
+} mach_no_senders_notification_t;
+
+typedef struct {
+    mach_msg_header_t not_header;
+    NDR_record_t      NDR;
+    mach_port_name_t  not_port;
+} mach_dead_name_notification_t;
+
+#define PORT_KOBJECT_NONE        0
+#define PORT_KOBJECT_TASK        1
+#define PORT_KOBJECT_THREAD      2
+#define PORT_KOBJECT_HOST        3
+#define PORT_KOBJECT_TIMER       4
+#define PORT_KOBJECT_LAUNCHD     5
+#define PORT_KOBJECT_BKS_DISPLAY 6
+#define PORT_KOBJECT_SVCHOST     7
+#define PORT_KOBJECT_IOKIT       8
+
+struct ipc_port;
+
+/* IPC Subsystem Interface */
+void ipc_init(void);
+void ipc_set_trace(int trace);
+
+struct ipc_port *ipc_port_from_name(mach_port_name_t name);
+void ipc_port_retain_send(struct ipc_port *port);
+struct ipc_port *ipc_get_bks_display_port(void);
+const char *lsk_getenv(const char *name);
+
+mach_port_t ipc_task_self(void);
+mach_port_t ipc_port_allocate_thread(void);
+mach_port_t ipc_mach_reply_port(void);
+mach_port_t ipc_mach_special_reply_port(void);
+mach_port_name_t ipc_svchost_port_create(void);
+mach_port_name_t ipc_iokit_port_create(void);
+
+int ipc_port_has_receive_right(mach_port_name_t name);
+
+int ipc_port_allocate(mach_port_t task, int right, mach_port_name_t *name);
+int ipc_port_allocate_name(mach_port_t task, int right, mach_port_name_t name);
+int ipc_port_allocate_full(mach_port_t task, int right, mach_port_t proto, void *qos, mach_port_name_t *name);
+int ipc_port_construct(mach_port_t task, mach_port_options_t *options, uint64_t context, mach_port_name_t *name);
+int ipc_port_destruct(mach_port_t task, mach_port_name_t name, int delta, uint64_t guard);
+int ipc_port_deallocate(mach_port_t task, mach_port_name_t name);
+int ipc_port_destroy(mach_port_t task, mach_port_name_t name);
+int ipc_port_mod_refs(mach_port_t task, mach_port_name_t name, int right, int delta);
+int ipc_port_insert_right(mach_port_t task, mach_port_name_t name, mach_port_t poly, int polyPoly);
+int ipc_port_extract_right(mach_port_t task, mach_port_name_t name, int desired_right, mach_port_t *poly, int *acquired);
+int ipc_port_type(mach_port_t task, mach_port_name_t name, int *ptype);
+int ipc_port_names(mach_port_t task, mach_port_name_t **names, uint32_t *names_cnt, mach_port_type_t **types, uint32_t *types_cnt);
+int ipc_port_get_refs(mach_port_t task, mach_port_name_t name, int right, uint32_t *refs);
+int ipc_port_get_attributes(mach_port_t task, mach_port_name_t name, int flavor, void *info, uint32_t *cnt);
+int ipc_port_set_attributes(mach_port_t task, mach_port_name_t name, int flavor, void *info, uint32_t cnt);
+int ipc_port_set_context(mach_port_t task, mach_port_name_t name, uint64_t context);
+int ipc_port_get_context(mach_port_t task, mach_port_name_t name, uint64_t *context);
+int ipc_port_guard(mach_port_t task, mach_port_name_t name, uint64_t guard, int strict);
+int ipc_port_unguard(mach_port_t task, mach_port_name_t name, uint64_t guard);
+int ipc_port_guard_with_flags(mach_port_t task, mach_port_name_t name, uint64_t guard, uint64_t flags);
+int ipc_port_swap_guard(mach_port_t task, mach_port_name_t name, uint64_t old_guard, uint64_t new_guard);
+int ipc_port_insert_member(mach_port_t task, mach_port_name_t name, mach_port_name_t pset);
+int ipc_port_extract_member(mach_port_t task, mach_port_name_t name, mach_port_name_t pset);
+int ipc_port_move_member(mach_port_t task, mach_port_name_t member, mach_port_name_t after);
+int ipc_port_request_notification(mach_port_t task, mach_port_name_t name, int id, uint32_t sync, mach_port_t notify, int poly, mach_port_t *previous);
+int ipc_port_set_mscount(mach_port_t task, mach_port_name_t name, uint32_t mscount);
+int ipc_port_kernel_object(mach_port_t task, mach_port_name_t name, uint32_t *kobject_type, uint64_t *kobject_addr);
+
+/* mk_timer */
+mach_port_name_t ipc_mk_timer_create(void);
+int ipc_mk_timer_destroy(mach_port_name_t name);
+int ipc_mk_timer_arm(mach_port_name_t name, uint64_t deadline);
+int ipc_mk_timer_arm_leeway(mach_port_name_t name, uint64_t flags, uint64_t deadline, uint64_t leeway);
+int ipc_mk_timer_cancel(mach_port_name_t name, uint64_t *result_time);
+
+/* Messaging */
+uint32_t ipc_port_peek_size(mach_port_name_t name);
+typedef void (*ipc_enqueue_hook_t)(mach_port_name_t name, uint32_t msgh_size);
+void ipc_set_enqueue_hook(ipc_enqueue_hook_t hook);
+
+int ipc_msg(void *msg, uint64_t option, uint32_t send_size, uint32_t rcv_size,
+            mach_port_name_t rcv_name, uint32_t timeout, mach_port_name_t notify,
+            void *scatter, uint32_t scatter_size);
+int ipc_msg2(void *data, uint64_t options, uint64_t msgh_bits_and_send_size, uint64_t msgh_remote_and_local_port,
+             uint64_t msgh_voucher_and_id, uint64_t desc_count_and_rcv_name, uint64_t rcv_size_and_priority, uint64_t timeout);
+
+void ipc_msg_destroy(void *msg);

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ioswine-surface presenter: a NativeActivity with no Java of our own.
+     The activity is the server; the iOS side (or the test client)
+     connects to the abstract socket "@ioswine-surface". -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.ioswine.surface"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk android:minSdkVersion="34" android:targetSdkVersion="34" />
+    <uses-feature android:name="android.hardware.touchscreen" android:required="true" />
+
+    <application
+        android:label="ioswine-surface"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+        android:hardwareAccelerated="false"
+        android:hasCode="false"
+        android:extractNativeLibs="true">
+        <activity
+            android:name="android.app.NativeActivity"
+            android:label="ioswine-surface"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+            android:launchMode="singleTask"
+            android:screenOrientation="fullSensor"
+            android:exported="true">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="ioswine-surface" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!-- ioswine minimal D47 Default Event Timing Profile.
+     UIKit logs "Misconfigured Device: Default Event Timing Profile is missing"
+     when this file is absent and its own message says to create an empty file
+     as a quick temporary workaround. This file is the well-formed version of
+     that workaround: an empty dictionary, so UIKit parses it and uses its
+     built-in defaults. No keys are invented here: the real per-device
+     calibration format is undocumented.
+     The real Apple file is extracted from the IPSW by tools/mksysroot.sh
+     (System/Library/EventTimingProfiles); until the next sysroot rebuild,
+     push this overlay to /data/local/tmp/ioswine/root on the device. -->
+<dict>
+</dict>
+</plist>

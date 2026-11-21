@@ -1,0 +1,137 @@
+index	offset	slot_address	target_address	mangled_symbol	demangled_symbol	pac_diversity	addr_div	key
+0	0x0	0x1ee63a100	0x180167c24	__ZN5dyld412RuntimeState9emptySlotEv	dyld4::RuntimeState::emptySlot()	0x2eb2	1	IA
+1	0x8	0x1ee63a108	0x180151c3c	__ZN5dyld44APIs19_libdyld_initializeEv	dyld4::APIs::_libdyld_initialize()	0x8379	1	IA
+2	0x10	0x1ee63a110	0x18012f428	__ZN5dyld44APIs17_dyld_image_countEv	dyld4::APIs::_dyld_image_count()	0x2020	1	IA
+3	0x18	0x1ee63a118	0x18012f474	__ZN5dyld44APIs22_dyld_get_image_headerEj	dyld4::APIs::_dyld_get_image_header(unsigned int)	0x4bf5	1	IA
+4	0x20	0x1ee63a120	0x18015ef68	__ZN5dyld44APIs28_dyld_get_image_vmaddr_slideEj	dyld4::APIs::_dyld_get_image_vmaddr_slide(unsigned int)	0x7d2d	1	IA
+5	0x28	0x1ee63a128	0x18015d574	__ZN5dyld44APIs20_dyld_get_image_nameEj	dyld4::APIs::_dyld_get_image_name(unsigned int)	0x0586	1	IA
+6	0x30	0x1ee63a130	0x18012f724	__ZN5dyld44APIs33_dyld_register_func_for_add_imageENS_16ReadOnlyCallbackIPFvPK11mach_headerlEEE	dyld4::APIs::_dyld_register_func_for_add_image(dyld4::ReadOnlyCallback<void (*)(mach_header const*, long)>)	0x67b4	1	IA
+7	0x38	0x1ee63a138	0x18012ff68	__ZN5dyld44APIs36_dyld_register_func_for_remove_imageENS_16ReadOnlyCallbackIPFvPK11mach_headerlEEE	dyld4::APIs::_dyld_register_func_for_remove_image(dyld4::ReadOnlyCallback<void (*)(mach_header const*, long)>)	0x9dc2	1	IA
+8	0x40	0x1ee63a140	0x18015a670	__ZN5dyld44APIs26NSVersionOfLinkTimeLibraryEPKc	dyld4::APIs::NSVersionOfLinkTimeLibrary(char const*)	0x1836	1	IA
+9	0x48	0x1ee63a148	0x18015de88	__ZN5dyld44APIs25NSVersionOfRunTimeLibraryEPKc	dyld4::APIs::NSVersionOfRunTimeLibrary(char const*)	0xcc71	1	IA
+10	0x50	0x1ee63a150	0x18012ef30	__ZN5dyld44APIs20_NSGetExecutablePathEPcPj	dyld4::APIs::_NSGetExecutablePath(char*, unsigned int*)	0xeb25	1	IA
+11	0x58	0x1ee63a158	0x180164bd0	__ZN5dyld44APIs16_dyld_fork_childEv	dyld4::APIs::_dyld_fork_child()	0xc17f	1	IA
+12	0x60	0x1ee63a160	0x18015d2a0	__ZN5dyld44APIs6dladdrEPKvP7dl_info	dyld4::APIs::dladdr(void const*, dl_info*)	0x3dc1	1	IA
+13	0x68	0x1ee63a168	0x18013fedc	__ZN5dyld44APIs6dlopenEPKci	dyld4::APIs::dlopen(char const*, int)	0xbf31	1	IA
+14	0x70	0x1ee63a170	0x18015fbb4	__ZN5dyld44APIs7dlcloseEPv	dyld4::APIs::dlclose(void*)	0x25e8	1	IA
+15	0x78	0x1ee63a178	0x180161cd4	__ZN5dyld44APIs7dlerrorEv	dyld4::APIs::dlerror()	0x8b18	1	IA
+16	0x80	0x1ee63a180	0x1801592f8	__ZN5dyld44APIs5dlsymEPvPKc	dyld4::APIs::dlsym(void*, char const*)	0x839d	1	IA
+17	0x88	0x1ee63a188	0x18015e094	__ZN5dyld44APIs16dlopen_preflightEPKc	dyld4::APIs::dlopen_preflight(char const*)	0xb1b6	1	IA
+18	0x90	0x1ee63a190	0x1801668c0	__ZN5dyld44APIs31NSCreateObjectFileImageFromFileEPKcPP19__NSObjectFileImage	dyld4::APIs::NSCreateObjectFileImageFromFile(char const*, __NSObjectFileImage**)	0x96bd	1	IA
+19	0x98	0x1ee63a198	0x1801668f0	__ZN5dyld44APIs33NSCreateObjectFileImageFromMemoryEPKvmPP19__NSObjectFileImage	dyld4::APIs::NSCreateObjectFileImageFromMemory(void const*, unsigned long, __NSObjectFileImage**)	0x8499	1	IA
+20	0xa0	0x1ee63a1a0	0x180166980	__ZN5dyld44APIs24NSDestroyObjectFileImageEP19__NSObjectFileImage	dyld4::APIs::NSDestroyObjectFileImage(__NSObjectFileImage*)	0x2248	1	IA
+21	0xa8	0x1ee63a1a8	0x1801669b0	__ZN5dyld44APIs34NSIsSymbolDefinedInObjectFileImageEP19__NSObjectFileImagePKc	dyld4::APIs::NSIsSymbolDefinedInObjectFileImage(__NSObjectFileImage*, char const*)	0xfc11	1	IA
+22	0xb0	0x1ee63a1b0	0x1801669e0	__ZN5dyld44APIs33NSGetSectionDataInObjectFileImageEP19__NSObjectFileImagePKcS4_Pm	dyld4::APIs::NSGetSectionDataInObjectFileImage(__NSObjectFileImage*, char const*, char const*, unsigned long*)	0x94a7	1	IA
+23	0xb8	0x1ee63a1b8	0x180166a10	__ZN5dyld44APIs14NSNameOfModuleEP10__NSModule	dyld4::APIs::NSNameOfModule(__NSModule*)	0xdc79	1	IA
+24	0xc0	0x1ee63a1c0	0x180166a40	__ZN5dyld44APIs22NSLibraryNameForModuleEP10__NSModule	dyld4::APIs::NSLibraryNameForModule(__NSModule*)	0xc93c	1	IA
+25	0xc8	0x1ee63a1c8	0x180166920	__ZN5dyld44APIs12NSLinkModuleEP19__NSObjectFileImagePKcj	dyld4::APIs::NSLinkModule(__NSObjectFileImage*, char const*, unsigned int)	0x1211	1	IA
+26	0xd0	0x1ee63a1d0	0x180166950	__ZN5dyld44APIs14NSUnLinkModuleEP10__NSModulej	dyld4::APIs::NSUnLinkModule(__NSModule*, unsigned int)	0x1c51	1	IA
+27	0xd8	0x1ee63a1d8	0x180166a70	__ZN5dyld44APIs21NSIsSymbolNameDefinedEPKc	dyld4::APIs::NSIsSymbolNameDefined(char const*)	0xe512	1	IA
+28	0xe0	0x1ee63a1e0	0x180166aa0	__ZN5dyld44APIs29NSIsSymbolNameDefinedWithHintEPKcS2_	dyld4::APIs::NSIsSymbolNameDefinedWithHint(char const*, char const*)	0xb7ad	1	IA
+29	0xe8	0x1ee63a1e8	0x180166ad0	__ZN5dyld44APIs28NSIsSymbolNameDefinedInImageEPK11mach_headerPKc	dyld4::APIs::NSIsSymbolNameDefinedInImage(mach_header const*, char const*)	0xd4ba	1	IA
+30	0xf0	0x1ee63a1f0	0x180166b00	__ZN5dyld44APIs21NSLookupAndBindSymbolEPKc	dyld4::APIs::NSLookupAndBindSymbol(char const*)	0x3707	1	IA
+31	0xf8	0x1ee63a1f8	0x180166b30	__ZN5dyld44APIs29NSLookupAndBindSymbolWithHintEPKcS2_	dyld4::APIs::NSLookupAndBindSymbolWithHint(char const*, char const*)	0x8b74	1	IA
+32	0x100	0x1ee63a200	0x180166b60	__ZN5dyld44APIs22NSLookupSymbolInModuleEP10__NSModulePKc	dyld4::APIs::NSLookupSymbolInModule(__NSModule*, char const*)	0x26d0	1	IA
+33	0x108	0x1ee63a208	0x180166b90	__ZN5dyld44APIs21NSLookupSymbolInImageEPK11mach_headerPKcj	dyld4::APIs::NSLookupSymbolInImage(mach_header const*, char const*, unsigned int)	0x8043	1	IA
+34	0x110	0x1ee63a210	0x180166bc0	__ZN5dyld44APIs17NSAddressOfSymbolEP10__NSSymbol	dyld4::APIs::NSAddressOfSymbol(__NSSymbol*)	0xfeb4	1	IA
+35	0x118	0x1ee63a218	0x180166bf0	__ZN5dyld44APIs17NSModuleForSymbolEP10__NSSymbol	dyld4::APIs::NSModuleForSymbol(__NSSymbol*)	0xa2cb	1	IA
+36	0x120	0x1ee63a220	0x180166c20	__ZN5dyld44APIs15NSLinkEditErrorEP16NSLinkEditErrorsPiPPKcS6_	dyld4::APIs::NSLinkEditError(NSLinkEditErrors*, int*, char const**, char const**)	0xd834	1	IA
+37	0x128	0x1ee63a228	0x180166c50	__ZN5dyld44APIs12NSAddLibraryEPKc	dyld4::APIs::NSAddLibrary(char const*)	0xec8b	1	IA
+38	0x130	0x1ee63a230	0x180166c80	__ZN5dyld44APIs25NSAddLibraryWithSearchingEPKc	dyld4::APIs::NSAddLibraryWithSearching(char const*)	0xd758	1	IA
+39	0x138	0x1ee63a238	0x180166cb0	__ZN5dyld44APIs10NSAddImageEPKcj	dyld4::APIs::NSAddImage(char const*, unsigned int)	0xad0b	1	IA
+40	0x140	0x1ee63a240	0x180166ce0	__ZN5dyld44APIs30_dyld_image_containing_addressEPKv	dyld4::APIs::_dyld_image_containing_address(void const*)	0x96fb	1	IA
+41	0x148	0x1ee63a248	0x180166d10	__ZN5dyld44APIs21_dyld_lookup_and_bindEPKcPPvPP10__NSModule	dyld4::APIs::_dyld_lookup_and_bind(char const*, void**, __NSModule**)	0x12ab	1	IA
+42	0x150	0x1ee63a250	0x180166d40	__ZN5dyld44APIs31_dyld_lookup_and_bind_with_hintEPKcS2_PPvPP10__NSModule	dyld4::APIs::_dyld_lookup_and_bind_with_hint(char const*, char const*, void**, __NSModule**)	0x9185	1	IA
+43	0x158	0x1ee63a258	0x180166d70	__ZN5dyld44APIs27_dyld_lookup_and_bind_fullyEPKcPPvPP10__NSModule	dyld4::APIs::_dyld_lookup_and_bind_fully(char const*, void**, __NSModule**)	0x665c	1	IA
+44	0x160	0x1ee63a260	0x180151af4	__ZN5dyld44APIs21_dyld_get_image_slideEPK11mach_header	dyld4::APIs::_dyld_get_image_slide(mach_header const*)	0x48c4	1	IA
+45	0x168	0x1ee63a268	0x18012f630	__ZN5dyld44APIs34dyld_image_path_containing_addressEPKv	dyld4::APIs::dyld_image_path_containing_address(void const*)	0x42ac	1	IA
+46	0x170	0x1ee63a270	0x1801488b8	__ZN5dyld44APIs26_dyld_find_unwind_sectionsEPvP20dyld_unwind_sections	dyld4::APIs::_dyld_find_unwind_sections(void*, dyld_unwind_sections*)	0x63f2	1	IA
+47	0x178	0x1ee63a278	0x180163b14	__ZN5dyld44APIs20dyld_get_sdk_versionEPK11mach_header	dyld4::APIs::dyld_get_sdk_version(mach_header const*)	0xa4fc	1	IA
+48	0x180	0x1ee63a280	0x180163b78	__ZN5dyld44APIs23dyld_get_min_os_versionEPK11mach_header	dyld4::APIs::dyld_get_min_os_version(mach_header const*)	0xc92d	1	IA
+49	0x188	0x1ee63a288	0x1801591cc	__ZN5dyld44APIs28dyld_get_program_sdk_versionEv	dyld4::APIs::dyld_get_program_sdk_version()	0x6fd4	1	IA
+50	0x190	0x1ee63a290	0x180163eac	__ZN5dyld44APIs31dyld_get_program_min_os_versionEv	dyld4::APIs::dyld_get_program_min_os_version()	0x3683	1	IA
+51	0x198	0x1ee63a298	0x180151bac	__ZN5dyld44APIs26dyld_process_is_restrictedEv	dyld4::APIs::dyld_process_is_restricted()	0x47cc	1	IA
+52	0x1a0	0x1ee63a2a0	0x18012f5e4	__ZN5dyld44APIs39dyld_shared_cache_some_image_overriddenEv	dyld4::APIs::dyld_shared_cache_some_image_overridden()	0xbc3a	1	IA
+53	0x1a8	0x1ee63a2a8	0x180164b14	__ZN5dyld44APIs30dyld_shared_cache_iterate_textEPKhNS_16ReadOnlyCallbackIU13block_pointerFvPK33dyld_shared_cache_dylib_text_infoEEE	dyld4::APIs::dyld_shared_cache_iterate_text(unsigned char const*, dyld4::ReadOnlyCallback<void (dyld_shared_cache_dylib_text_info const*) block_pointer>)	0xd469	1	IA
+54	0x1b0	0x1ee63a2b0	0x18011e170	__ZN5dyld44APIs36dyld_image_header_containing_addressEPKv	dyld4::APIs::dyld_image_header_containing_address(void const*)	0xb64d	1	IA
+55	0x1b8	0x1ee63a2b8	0x180160a24	__ZN5dyld44APIs27dyld_shared_cache_file_pathEv	dyld4::APIs::dyld_shared_cache_file_path()	0x850a	1	IA
+56	0x1c0	0x1ee63a2c0	0x180163884	__ZN5dyld44APIs37dyld_get_program_sdk_watch_os_versionEv	dyld4::APIs::dyld_get_program_sdk_watch_os_version()	0x214e	1	IA
+57	0x1c8	0x1ee63a2c8	0x180163a3c	__ZN5dyld44APIs37dyld_get_program_min_watch_os_versionEv	dyld4::APIs::dyld_get_program_min_watch_os_version()	0xe3ae	1	IA
+58	0x1d0	0x1ee63a2d0	0x180163ed4	__ZN5dyld44APIs26_dyld_objc_notify_registerENS_16ReadOnlyCallbackIPFvjPKPKcPKPK11mach_headerEEENS1_IPFvS3_S8_EEESG_	dyld4::APIs::_dyld_objc_notify_register(dyld4::ReadOnlyCallback<void (*)(unsigned int, char const* const*, mach_header const* const*)>, dyld4::ReadOnlyCallback<void (*)(char const*, mach_header const*)>, dyld4::ReadOnlyCallback<void (*)(char const*, mach_header const*)>)	0x16d9	1	IA
+59	0x1d8	0x1ee63a2d8	0x180147ed4	__ZN5dyld44APIs20_dyld_get_image_uuidEPK11mach_headerPh	dyld4::APIs::_dyld_get_image_uuid(mach_header const*, unsigned char*)	0x1bfc	1	IA
+60	0x1e0	0x1ee63a2e0	0x18012f6b8	__ZN5dyld44APIs27_dyld_get_shared_cache_uuidEPh	dyld4::APIs::_dyld_get_shared_cache_uuid(unsigned char*)	0x1603	1	IA
+61	0x1e8	0x1ee63a2e8	0x18011f88c	__ZN5dyld44APIs25_dyld_is_memory_immutableEPKvm	dyld4::APIs::_dyld_is_memory_immutable(void const*, unsigned long)	0xeb36	1	IA
+62	0x1f0	0x1ee63a2f0	0x1801619cc	__ZN5dyld44APIs35dyld_shared_cache_find_iterate_textEPKhPPKcNS_16ReadOnlyCallbackIU13block_pointerFvPK33dyld_shared_cache_dylib_text_infoEEE	dyld4::APIs::dyld_shared_cache_find_iterate_text(unsigned char const*, char const**, dyld4::ReadOnlyCallback<void (dyld_shared_cache_dylib_text_info const*) block_pointer>)	0xf930	1	IA
+63	0x1f8	0x1ee63a2f8	0x18013c110	__ZN5dyld44APIs28_dyld_get_shared_cache_rangeEPm	dyld4::APIs::_dyld_get_shared_cache_range(unsigned long*)	0x3219	1	IA
+64	0x200	0x1ee63a300	0x180163adc	__ZN5dyld44APIs47obsolete_dyld_get_program_sdk_bridge_os_versionEv	dyld4::APIs::obsolete_dyld_get_program_sdk_bridge_os_version()	0xcf36	1	IA
+65	0x208	0x1ee63a308	0x180163af8	__ZN5dyld44APIs47obsolete_dyld_get_program_min_bridge_os_versionEv	dyld4::APIs::obsolete_dyld_get_program_min_bridge_os_version()	0x8db3	1	IA
+66	0x210	0x1ee63a310	0x18011e0f4	__ZN5dyld44APIs24dyld_get_active_platformEv	dyld4::APIs::dyld_get_active_platform()	0xc6a9	1	IA
+67	0x218	0x1ee63a318	0x18014845c	__ZN5dyld44APIs22dyld_get_base_platformEj	dyld4::APIs::dyld_get_base_platform(unsigned int)	0xdafc	1	IA
+68	0x220	0x1ee63a320	0x180163c74	__ZN5dyld44APIs26dyld_is_simulator_platformEj	dyld4::APIs::dyld_is_simulator_platform(unsigned int)	0x198a	1	IA
+69	0x228	0x1ee63a328	0x180123cbc	__ZN5dyld44APIs17dyld_sdk_at_leastEPK11mach_header20dyld_build_version_t	dyld4::APIs::dyld_sdk_at_least(mach_header const*, dyld_build_version_t)	0xcbff	1	IA
+70	0x230	0x1ee63a330	0x180163ce4	__ZN5dyld44APIs19dyld_minos_at_leastEPK11mach_header20dyld_build_version_t	dyld4::APIs::dyld_minos_at_least(mach_header const*, dyld_build_version_t)	0x4391	1	IA
+71	0x238	0x1ee63a338	0x18011e000	__ZN5dyld44APIs25dyld_program_sdk_at_leastE20dyld_build_version_t	dyld4::APIs::dyld_program_sdk_at_least(dyld_build_version_t)	0x9c2b	1	IA
+72	0x240	0x1ee63a340	0x18015d6e4	__ZN5dyld44APIs27dyld_program_minos_at_leastE20dyld_build_version_t	dyld4::APIs::dyld_program_minos_at_least(dyld_build_version_t)	0x9e9b	1	IA
+73	0x248	0x1ee63a348	0x18015ed4c	__ZN5dyld44APIs23dyld_get_image_versionsEPK11mach_headerU13block_pointerFvjjjE	dyld4::APIs::dyld_get_image_versions(mach_header const*, void (unsigned int, unsigned int, unsigned int) block_pointer)	0xe729	1	IA
+74	0x250	0x1ee63a350	0x180147638	__ZN5dyld44APIs26_dyld_images_for_addressesEjPPKvP22dyld_image_uuid_offset	dyld4::APIs::_dyld_images_for_addresses(unsigned int, void const**, dyld_image_uuid_offset*)	0xd2fa	1	IA
+75	0x258	0x1ee63a358	0x180164204	__ZN5dyld44APIs30_dyld_register_for_image_loadsENS_16ReadOnlyCallbackIPFvPK11mach_headerPKcbEEE	dyld4::APIs::_dyld_register_for_image_loads(dyld4::ReadOnlyCallback<void (*)(mach_header const*, char const*, bool)>)	0x497d	1	IA
+76	0x260	0x1ee63a360	0x180164c1c	__ZN5dyld44APIs20_dyld_atfork_prepareEv	dyld4::APIs::_dyld_atfork_prepare()	0x87d6	1	IA
+77	0x268	0x1ee63a368	0x180164c24	__ZN5dyld44APIs19_dyld_atfork_parentEv	dyld4::APIs::_dyld_atfork_parent()	0x20e9	1	IA
+78	0x270	0x1ee63a370	0x180166860	__ZN5dyld44APIs17dyld_need_closureEPKcS2_	dyld4::APIs::dyld_need_closure(char const*, char const*)	0xaf50	1	IA
+79	0x278	0x1ee63a378	0x18013f9a0	__ZN5dyld44APIs42dyld_has_inserted_or_interposing_librariesEv	dyld4::APIs::dyld_has_inserted_or_interposing_libraries()	0x882d	1	IA
+80	0x280	0x1ee63a380	0x1801641a0	__ZN5dyld44APIs28_dyld_shared_cache_optimizedEv	dyld4::APIs::_dyld_shared_cache_optimized()	0xe4ca	1	IA
+81	0x288	0x1ee63a388	0x180166800	__ZN5dyld44APIs35_dyld_shared_cache_is_locally_builtEv	dyld4::APIs::_dyld_shared_cache_is_locally_built()	0x292c	1	IA
+82	0x290	0x1ee63a390	0x18013c460	__ZN5dyld44APIs35_dyld_register_for_bulk_image_loadsENS_16ReadOnlyCallbackIPFvjPPK11mach_headerPPKcEEE	dyld4::APIs::_dyld_register_for_bulk_image_loads(dyld4::ReadOnlyCallback<void (*)(unsigned int, mach_header const**, char const**)>)	0x8dec	1	IA
+83	0x298	0x1ee63a398	0x18016673c	__ZN5dyld44APIs29_dyld_register_driverkit_mainEPFvvE	dyld4::APIs::_dyld_register_driverkit_main(void (*)())	0xa68e	1	IA
+84	0x2a0	0x1ee63a3a0	0x18011ef34	__ZN5dyld44APIs23_dyld_get_objc_selectorEPKc	dyld4::APIs::_dyld_get_objc_selector(char const*)	0x252d	1	IA
+85	0x2a8	0x1ee63a3a8	0x18011fb38	__ZN5dyld44APIs25_dyld_for_each_objc_classEPKcNS_16ReadOnlyCallbackIU13block_pointerFvPvbPbEEE	dyld4::APIs::_dyld_for_each_objc_class(char const*, dyld4::ReadOnlyCallback<void (void*, bool, bool*) block_pointer>)	0x0616	1	IA
+86	0x2b0	0x1ee63a3b0	0x180145bec	__ZN5dyld44APIs28_dyld_for_each_objc_protocolEPKcNS_16ReadOnlyCallbackIU13block_pointerFvPvbPbEEE	dyld4::APIs::_dyld_for_each_objc_protocol(char const*, dyld4::ReadOnlyCallback<void (void*, bool, bool*) block_pointer>)	0xdd11	1	IA
+87	0x2b8	0x1ee63a3b8	0x18015eb74	__ZN5dyld44APIs17_dyld_launch_modeEv	dyld4::APIs::_dyld_launch_mode()	0x2398	1	IA
+88	0x2c0	0x1ee63a3c0	0x1801666f8	__ZN5dyld44APIs22_dyld_is_objc_constantE20DyldObjCConstantKindPKv	dyld4::APIs::_dyld_is_objc_constant(DyldObjCConstantKind, void const*)	0xb004	1	IA
+89	0x2c8	0x1ee63a3c8	0x1801666b4	__ZN5dyld44APIs23_dyld_has_fix_for_radarEPKc	dyld4::APIs::_dyld_has_fix_for_radar(char const*)	0x0ab0	1	IA
+90	0x2d0	0x1ee63a3d0	0x18015eaa8	__ZN5dyld44APIs28_dyld_shared_cache_real_pathEPKc	dyld4::APIs::_dyld_shared_cache_real_path(char const*)	0x222a	1	IA
+91	0x2d8	0x1ee63a3d8	0x180126324	__ZN5dyld44APIs32_dyld_shared_cache_contains_pathEPKc	dyld4::APIs::_dyld_shared_cache_contains_path(char const*)	0x11cb	1	IA
+92	0x2e0	0x1ee63a3e0	0x18013fa04	__ZN5dyld44APIs11dlopen_fromEPKciPv	dyld4::APIs::dlopen_from(char const*, int, void*)	0xd48c	1	IA
+93	0x2e8	0x1ee63a3e8	0x180164164	__ZN5dyld44APIs14dlopen_auditedEPKci	dyld4::APIs::dlopen_audited(char const*, int)	0xd2a5	1	IA
+94	0x2f0	0x1ee63a3f0	0x18012eb64	__ZN5dyld44APIs27_dyld_get_prog_image_headerEv	dyld4::APIs::_dyld_get_prog_image_header()	0x500e	1	IA
+95	0x2f8	0x1ee63a3f8	0x1801668a4	__ZN5dyld44APIs8obsoleteEv	dyld4::APIs::obsolete()	0x3cb5	1	IA
+96	0x300	0x1ee63a400	0x180164c44	__ZN5dyld44APIs24_dyld_visit_objc_classesENS_16ReadOnlyCallbackIU13block_pointerFvPKvEEE	dyld4::APIs::_dyld_visit_objc_classes(dyld4::ReadOnlyCallback<void (void const*) block_pointer>)	0x0fb3	1	IA
+97	0x308	0x1ee63a408	0x180122594	__ZN5dyld44APIs22_dyld_objc_class_countEv	dyld4::APIs::_dyld_objc_class_count()	0x9241	1	IA
+98	0x310	0x1ee63a410	0x180164f60	__ZN5dyld44APIs34_dyld_objc_uses_large_shared_cacheEv	dyld4::APIs::_dyld_objc_uses_large_shared_cache()	0x49fa	1	IA
+99	0x318	0x1ee63a418	0x180122274	__ZNK5dyld44APIs31_dyld_find_protocol_conformanceEPKvS2_S2_	dyld4::APIs::_dyld_find_protocol_conformance(void const*, void const*, void const*) const	0x926a	1	IA
+100	0x320	0x1ee63a420	0x180121f34	__ZNK5dyld44APIs44_dyld_find_foreign_type_protocol_conformanceEPKvPKcm	dyld4::APIs::_dyld_find_foreign_type_protocol_conformance(void const*, char const*, unsigned long) const	0xaca4	1	IA
+101	0x328	0x1ee63a428	0x180159cc8	__ZNK5dyld44APIs33_dyld_swift_optimizations_versionEv	dyld4::APIs::_dyld_swift_optimizations_version() const	0x9aa9	1	IA
+102	0x330	0x1ee63a430	0x18013cea0	__ZN5dyld44APIs25runAllInitializersForMainEv	dyld4::APIs::runAllInitializersForMain()	0x7dac	1	IA
+103	0x338	0x1ee63a438	0x180164c2c	__ZN5dyld44APIs24_dyld_before_fork_dlopenEv	dyld4::APIs::_dyld_before_fork_dlopen()	0x5392	1	IA
+104	0x340	0x1ee63a440	0x180164c34	__ZN5dyld44APIs30_dyld_after_fork_dlopen_parentEv	dyld4::APIs::_dyld_after_fork_dlopen_parent()	0x5bb9	1	IA
+105	0x348	0x1ee63a448	0x180164c3c	__ZN5dyld44APIs29_dyld_after_fork_dlopen_childEv	dyld4::APIs::_dyld_after_fork_dlopen_child()	0x8d58	1	IA
+106	0x350	0x1ee63a450	0x18015ee68	__ZN5dyld44APIs29_dyld_get_dlopen_image_headerEPv	dyld4::APIs::_dyld_get_dlopen_image_header(void*)	0x2763	1	IA
+107	0x358	0x1ee63a458	0x18012e144	__ZN5dyld44APIs29_dyld_objc_register_callbacksEPKNS_13ObjCCallbacksE	dyld4::APIs::_dyld_objc_register_callbacks(dyld4::ObjCCallbacks const*)	0x7947	1	IA
+108	0x360	0x1ee63a460	0x180159de8	__ZN5dyld44APIs50_dyld_has_preoptimized_swift_protocol_conformancesEPK11mach_header	dyld4::APIs::_dyld_has_preoptimized_swift_protocol_conformances(mach_header const*)	0x5658	1	IA
+109	0x368	0x1ee63a468	0x180125e20	__ZN5dyld44APIs39_dyld_find_protocol_conformance_on_diskEPKvS2_S2_j	dyld4::APIs::_dyld_find_protocol_conformance_on_disk(void const*, void const*, void const*, unsigned int)	0xbad5	1	IA
+110	0x370	0x1ee63a470	0x180159f54	__ZN5dyld44APIs52_dyld_find_foreign_type_protocol_conformance_on_diskEPKvPKcmj	dyld4::APIs::_dyld_find_foreign_type_protocol_conformance_on_disk(void const*, char const*, unsigned long, unsigned int)	0x4201	1	IA
+111	0x378	0x1ee63a478	0x18013c308	__ZN5dyld44APIs25_dyld_lookup_section_infoEPK11mach_headerP29_dyld_section_location_info_s27_dyld_section_location_kind	dyld4::APIs::_dyld_lookup_section_info(mach_header const*, _dyld_section_location_info_s*, _dyld_section_location_kind)	0xbdc4	1	IA
+112	0x380	0x1ee63a480	0x180164f68	__ZN5dyld44APIs36_dyld_pseudodylib_register_callbacksEPKNS_28PseudoDylibRegisterCallbacksE	dyld4::APIs::_dyld_pseudodylib_register_callbacks(dyld4::PseudoDylibRegisterCallbacks const*)	0xc26a	1	IA
+113	0x388	0x1ee63a488	0x180165414	__ZN5dyld44APIs38_dyld_pseudodylib_deregister_callbacksEP34_dyld_pseudodylib_callbacks_opaque	dyld4::APIs::_dyld_pseudodylib_deregister_callbacks(_dyld_pseudodylib_callbacks_opaque*)	0xa918	1	IA
+114	0x390	0x1ee63a490	0x1801658b4	__ZN5dyld44APIs26_dyld_pseudodylib_registerEPvmP34_dyld_pseudodylib_callbacks_opaqueS1_	dyld4::APIs::_dyld_pseudodylib_register(void*, unsigned long, _dyld_pseudodylib_callbacks_opaque*, void*)	0xff8d	1	IA
+115	0x398	0x1ee63a498	0x18016631c	__ZN5dyld44APIs28_dyld_pseudodylib_deregisterEP24_dyld_pseudodylib_opaque	dyld4::APIs::_dyld_pseudodylib_deregister(_dyld_pseudodylib_opaque*)	0x23aa	1	IA
+116	0x3a0	0x1ee63a4a0	0x18015e68c	__ZN5dyld44APIs39_dyld_is_preoptimized_objc_image_loadedEt	dyld4::APIs::_dyld_is_preoptimized_objc_image_loaded(unsigned short)	0xcd07	1	IA
+117	0x3a8	0x1ee63a4a8	0x18013c238	__ZN5dyld44APIs28_dyld_for_objc_header_opt_rwEv	dyld4::APIs::_dyld_for_objc_header_opt_rw()	0x71bb	1	IA
+118	0x3b0	0x1ee63a4b0	0x18013c1b4	__ZN5dyld44APIs28_dyld_for_objc_header_opt_roEv	dyld4::APIs::_dyld_for_objc_header_opt_ro()	0xd653	1	IA
+119	0x3b8	0x1ee63a4b8	0x180166898	__ZN5dyld44APIs19_dyld_dlsym_blockedEv	dyld4::APIs::_dyld_dlsym_blocked()	0x1f9e	1	IA
+120	0x3c0	0x1ee63a4c0	0x18015f1d0	__ZN5dyld44APIs29_dyld_register_dlsym_notifierENS_16ReadOnlyCallbackIPFvPKcEEE	dyld4::APIs::_dyld_register_dlsym_notifier(dyld4::ReadOnlyCallback<void (*)(char const*)>)	0x59fa	1	IA
+121	0x3c8	0x1ee63a4c8	0x180140248	__ZN5dyld44APIs35_dyld_get_swift_prespecialized_dataEv	dyld4::APIs::_dyld_get_swift_prespecialized_data()	0x45b0	1	IA
+122	0x3d0	0x1ee63a4d0	0x1801402f8	__ZN5dyld44APIs35_dyld_find_pointer_hash_table_entryEPKvS2_mPS2_	dyld4::APIs::_dyld_find_pointer_hash_table_entry(void const*, void const*, unsigned long, void const**)	0x62da	1	IA
+123	0x3d8	0x1ee63a4d8	0x18015de4c	__ZN5dyld44APIs34dyld_get_program_sdk_version_tokenEv	dyld4::APIs::dyld_get_program_sdk_version_token()	0xcf41	1	IA
+124	0x3e0	0x1ee63a4e0	0x180163df4	__ZN5dyld44APIs36dyld_get_program_minos_version_tokenEv	dyld4::APIs::dyld_get_program_minos_version_token()	0x8d62	1	IA
+125	0x3e8	0x1ee63a4e8	0x180163e30	__ZN5dyld44APIs31dyld_version_token_get_platformEy	dyld4::APIs::dyld_version_token_get_platform(unsigned long long)	0x8bec	1	IA
+126	0x3f0	0x1ee63a4f0	0x18015ea00	__ZN5dyld44APIs27dyld_version_token_at_leastEy20dyld_build_version_t	dyld4::APIs::dyld_version_token_at_least(unsigned long long, dyld_build_version_t)	0x1dd3	1	IA
+127	0x3f8	0x1ee63a4f8	0x180166da0	__ZN5dyld44APIs20_dyld_is_pseudodylibEPv	dyld4::APIs::_dyld_is_pseudodylib(void*)	0x0afc	1	IA
+128	0x400	0x1ee63a500	0x180166e74	__ZN5dyld44APIs31_dyld_for_each_prewarming_rangeENS_16ReadOnlyCallbackIPFvPKvmEEE	dyld4::APIs::_dyld_for_each_prewarming_range(dyld4::ReadOnlyCallback<void (*)(void const*, unsigned long)>)	0x8cba	1	IA
+129	0x408	0x1ee63a508	0x180160a70	__ZN5dyld44APIs26_dyld_all_image_infos_TEMPEv	dyld4::APIs::_dyld_all_image_infos_TEMP()	0xb32e	1	IA
+130	0x410	0x1ee63a510	0x180166e68	__ZN5dyld44APIs14_dyld_commpageEv	dyld4::APIs::_dyld_commpage()	0x263f	1	IA
+131	0x418	0x1ee63a518	0x180147558	__ZN5dyld44APIs17_dyld_stack_rangeEPPKvS3_	dyld4::APIs::_dyld_stack_range(void const**, void const**)	0x5bff	1	IA
+132	0x420	0x1ee63a520	0x180167124	__ZN5dyld44APIs36_dyld_call_with_writable_tpro_memoryEPFvPvES1_	dyld4::APIs::_dyld_call_with_writable_tpro_memory(void (*)(void*), void*)	0x8c7f	1	IA
+133	0x428	0x1ee63a528	0x180164874	__ZN5dyld44APIs47_dyld_shared_cache_file_path_containing_addressEPKvPcPy	dyld4::APIs::_dyld_shared_cache_file_path_containing_address(void const*, char*, unsigned long long*)	0xd101	1	IA
+134	0x430	0x1ee63a530	0x180167480	__ZN5dyld44APIs15_dyld_lazy_loadEPjPK11mach_header	dyld4::APIs::_dyld_lazy_load(unsigned int*, mach_header const*)	0x746d	1	IA
+135	0x438	0x1ee63a538	0x180167c18	__ZN5dyld44APIs21_dyld_get_dyld_headerEv	dyld4::APIs::_dyld_get_dyld_header()	0x35cd	1	IA

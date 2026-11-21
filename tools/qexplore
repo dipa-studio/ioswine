@@ -1,0 +1,205 @@
+#!/usr/bin/env bash
+# qexplore - automated UI exploration on the PC (qemu + hostpresent).
+# usage: tools/qexplore SEED SECONDS
+set -u
+
+SEED=${1:?usage: tools/qexplore SEED SECONDS}
+BUDGET=${2:?usage: tools/qexplore SEED SECONDS}
+
+SCRIPT=$(readlink -f "$0" 2>/dev/null || echo "$0")
+REPO=$(cd "$(dirname "$SCRIPT")/.." && pwd)
+QID=${QID:-$SEED}
+D=/data/local/tmp/ioswine
+CTL="$D/hostpresent-q${QID}.ctl"
+QLOG="$D/q-q${QID}.log"
+OUTDIR="$REPO/build/qexplore"
+TMPDIR_WORK="$REPO/build/tmp"
+
+mkdir -p "$OUTDIR" "$TMPDIR_WORK"
+rm -f "$OUTDIR/${SEED}-"*.log
+
+RANDOM=$SEED
+TABS=(144 437 720 995 1296)
+
+QR=""
+ACT_TMP=""
+QRUN_OUT=""
+CUR_LOG=""
+FINALIZED=1
+
+count_frames() {
+  local f="$1"
+  local n=0
+  [ -f "$f" ] || { echo 0; return; }
+  n=$(grep -acE '\[(snapshot|carender)\] frame ' "$f" 2>/dev/null || true)
+  echo "${n:-0}"
+}
+
+finalize_run() {
+  [ "$FINALIZED" -eq 1 ] && return 0
+  FINALIZED=1
+  local reason="$1" rc="$2" elapsed="$3"
+  local frames=0
+  if [ -f "$QLOG" ]; then
+    cp "$QLOG" "$CUR_LOG"
+    frames=$(count_frames "$CUR_LOG")
+  else
+    : > "$CUR_LOG"
+  fi
+  if [ -f "$ACT_TMP" ] && [ -s "$ACT_TMP" ]; then
+    cat "$ACT_TMP" >> "$CUR_LOG"
+  fi
+  printf '[qexplore] seed=%s run=%s reason=%s rc=%s elapsed=%ss frames=%s\n' \
+    "$SEED" "$run" "$reason" "$rc" "$elapsed" "$frames" >> "$CUR_LOG"
+  rm -f "$ACT_TMP" "$QRUN_OUT"
+}
+
+cleanup() {
+  if [ -n "$QR" ]; then
+    kill "$QR" 2>/dev/null || true
+    wait "$QR" 2>/dev/null || true
+    QR=""
+  fi
+  if [ "$FINALIZED" -eq 0 ] && [ -n "$CUR_LOG" ]; then
+    local now=$(date +%s)
+    finalize_run "interrupted" "?" "$((now - RUN_START))"
+  fi
+}
+trap cleanup EXIT
+trap 'cleanup; exit 130' INT
+trap 'cleanup; exit 143' TERM HUP
+
+send_ctl() {
+  local cmd="$1"
+  [ -p "$CTL" ] || return 1
+  timeout 1 bash -c 'printf "%s\n" "$1" > "$2"' _ "$cmd" "$CTL" 2>/dev/null
+}
+
+monkey_step() {
+  local r=$((RANDOM % 100))
+  local cmd msg
+  if [ "$r" -lt 35 ]; then
+    local x=${TABS[$((RANDOM % 5))]}
+    cmd="tap $x 3165"
+    msg="[monkey] tab $x"
+  elif [ "$r" -lt 50 ]; then
+    local x=$((1050 + (RANDOM % 3) * 120))
+    cmd="tap $x 190"
+    msg="[monkey] navbtn $x"
+  elif [ "$r" -lt 80 ]; then
+    local y=$((600 + RANDOM % 2300))
+    cmd="tap 700 $y"
+    msg="[monkey] row $y"
+  else
+    cmd="swipe 700 2400 700 900 300"
+    msg="[monkey] swipe-up"
+  fi
+  send_ctl "$cmd" || return 1
+  printf '%s\n' "$msg" >> "$ACT_TMP"
+  return 0
+}
+
+START=$(date +%s)
+run=0
+RUN_START=$START
+
+while true; do
+  NOW=$(date +%s)
+  ELAPSED=$((NOW - START))
+  REMAIN=$((BUDGET - ELAPSED))
+  [ "$REMAIN" -lt 10 ] && break
+
+  run=$((run + 1))
+  CUR_LOG="$OUTDIR/${SEED}-${run}.log"
+  ACT_TMP="$TMPDIR_WORK/qexplore-${SEED}-${run}.actions"
+  QRUN_OUT="$TMPDIR_WORK/qexplore-${SEED}-${run}.qrun"
+  : > "$ACT_TMP"
+  : > "$QRUN_OUT"
+  rm -f "$QLOG"
+  FINALIZED=0
+  RUN_START=$(date +%s)
+
+  QPRESENT=1 QCARENDER="${QCARENDER:-0}" QID="$QID" nice -n 10 "$REPO/tools/qrun" "$((REMAIN + 15))" > "$QRUN_OUT" 2>&1 &
+  QR=$!
+
+  end_reason=""
+  cur_frames=0
+
+  # Wait for first frame (snapshot or carender) or boot stall / exit / budget.
+  while kill -0 "$QR" 2>/dev/null; do
+    NOW=$(date +%s)
+    if [ $((NOW - START)) -ge "$BUDGET" ]; then
+      end_reason="budget"
+      break
+    fi
+    cur_frames=$(count_frames "$QLOG")
+    if [ "$cur_frames" -ge 1 ]; then
+      break
+    fi
+    if [ $((NOW - RUN_START)) -ge 90 ]; then
+      end_reason="stall"
+      break
+    fi
+    sleep 1
+  done
+
+  # Drive UI with monkey actions every 1.5 s while checking for 30 s frame stalls.
+  if [ -z "$end_reason" ] && [ "$cur_frames" -ge 1 ] && kill -0 "$QR" 2>/dev/null; then
+    last_frame_count=$cur_frames
+    last_frame_ts=$(date +%s)
+    while kill -0 "$QR" 2>/dev/null; do
+      NOW=$(date +%s)
+      if [ $((NOW - START)) -ge "$BUDGET" ]; then
+        end_reason="budget"
+        break
+      fi
+      cur_frames=$(count_frames "$QLOG")
+      if [ "$cur_frames" -gt "$last_frame_count" ]; then
+        last_frame_count=$cur_frames
+        last_frame_ts=$NOW
+      elif [ $((NOW - last_frame_ts)) -ge 30 ]; then
+        end_reason="stall"
+        break
+      fi
+      monkey_step || true
+      sleep 1.5
+    done
+  fi
+
+  if [ "$end_reason" = "stall" ]; then
+    # thread dump of this instance's guest (identified by its own socket env)
+    for qp in $(pidof qemu-aarch64-ios); do
+      if tr '\0' '\n' < /proc/$qp/environ 2>/dev/null | grep -qx "IOSWINE_SURFACE_SOCKET=ioswine-surface-q${QID}"; then
+        kill -QUIT "$qp" 2>/dev/null; sleep 4
+      fi
+    done
+  fi
+  if [ -n "$end_reason" ] && kill -0 "$QR" 2>/dev/null; then
+    kill "$QR" 2>/dev/null || true
+  fi
+  wait "$QR" 2>/dev/null || true
+  QR=""
+
+  RUN_END=$(date +%s)
+  RUN_ELAPSED=$((RUN_END - RUN_START))
+  rc="?"
+  if [ -f "$QRUN_OUT" ]; then
+    rc_line=$(grep -m1 '^rc=' "$QRUN_OUT" 2>/dev/null || true)
+    if [ -n "$rc_line" ]; then
+      rc=${rc_line#rc=}
+      rc=${rc%% *}
+    fi
+  fi
+  [ -z "$end_reason" ] && end_reason="exit"
+
+  finalize_run "$end_reason" "$rc" "$RUN_ELAPSED"
+
+  frames=$(count_frames "$CUR_LOG")
+  echo "=== run $SEED-$run reason=$end_reason rc=$rc elapsed=${RUN_ELAPSED}s frames=$frames"
+  grep -a -E "lsk CRASH|Terminating app|reason:|\[nsexception\]|FATAL" "$CUR_LOG" | head -5 || true
+  grep -a "\[monkey\]" "$CUR_LOG" | tail -4 | sed 's/^/  last: /' || true
+
+  [ "$end_reason" = "budget" ] && break
+done
+
+echo "=== qexplore done seed=$SEED runs=$run"

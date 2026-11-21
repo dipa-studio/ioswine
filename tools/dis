@@ -1,0 +1,26 @@
+#!/usr/bin/env python3
+"""Fast shared-cache disassembler (seconds, not minutes like `ipsw dsc disass`).
+usage: tools/dis <image-substring> <symbol> [bytes=256]     e.g. tools/dis libsystem_kernel _mach_msg 512
+       tools/dis 0x<vaddr> [bytes=256]
+Exported symbols only (export trie). Output: objdump lines with real cache addresses."""
+import os, sys
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+os.chdir(REPO)
+sys.path.insert(0, os.path.join(REPO, "tools"))
+from dsc_tool import DSCCache
+a = sys.argv[1:]
+if not a: sys.exit(__doc__)
+d = DSCCache()
+if a[0].startswith("0x"):
+    va, n = int(a[0], 16), int(a[1], 0) if len(a) > 1 else 256
+else:
+    if len(a) < 2: sys.exit(__doc__)
+    imgs = [k for k in d.images if a[0] in k]
+    if not imgs: sys.exit("no image matches " + a[0])
+    va = None
+    for k in sorted(imgs, key=len):
+        va = d.lookup_symbol(d.images[k], a[1])
+        if va: print("# %s %s = %#x" % (k, a[1], va)); break
+    if not va: sys.exit("symbol not exported by %s" % imgs[:5])
+    n = int(a[2], 0) if len(a) > 2 else 256
+print(d.disass(va, n))

@@ -1,0 +1,146 @@
+#!/bin/sh
+# qrun - run an iOS binary under qemu-aarch64 on the PC (crash repro without the phone).
+# usage: tools/qrun [seconds] [exe]   (default: 150 s, Aidoku). Log: /data/local/tmp/ioswine/q.log
+# Optional QID=n isolates socket, ctl/png/log files (-qN), HOME (home/aidoku-qN), and PID tracking.
+T=${1:-150}; EXE=${2:-Aidoku.app/Aidoku}
+SCRIPT=$(readlink -f "$0" 2>/dev/null || echo "$0")
+REPO=$(cd "$(dirname "$SCRIPT")/.." && pwd)
+D=/data/local/tmp/ioswine
+cd "$D" || exit 1
+
+if [ -n "${QID:-}" ]; then
+  SFX="-q${QID}"
+  SOCK="ioswine-surface${SFX}"
+  CTL="$D/hostpresent${SFX}.ctl"
+  PNG="$D/host-frame${SFX}.png"
+  HP_LOG="$D/hostpresent${SFX}.log"
+  Q_LOG="$D/q${SFX}.log"
+  APP_HOME="$D/home/aidoku${SFX}"
+  HP_PIDFILE="$D/hostpresent${SFX}.pid"
+  Q_PIDFILE="$D/qemu${SFX}.pid"
+  TMOUT_PIDFILE="$D/timeout${SFX}.pid"
+else
+  SFX=""
+  SOCK=""
+  CTL="$D/hostpresent.ctl"
+  PNG="$D/host-frame.png"
+  HP_LOG="$D/hostpresent.log"
+  Q_LOG="$D/q.log"
+  APP_HOME="$D/home/aidoku"
+  HP_PIDFILE=""
+  Q_PIDFILE=""
+  TMOUT_PIDFILE=""
+fi
+
+# fresh app container each run (CoreData needs Application Support; empty homes broke the store)
+if [ -n "$QID" ]; then rm -rf "$APP_HOME"; fi
+mkdir -p "$APP_HOME/tmp" "$APP_HOME/Documents" "$APP_HOME/Library/Application Support" "$APP_HOME/Library/Caches" "$APP_HOME/Library/Preferences"
+
+kill_pidfile() {
+  pf=$1; expected=$2
+  [ -n "$pf" ] && [ -f "$pf" ] || return 0
+  p=$(cat "$pf" 2>/dev/null)
+  rm -f "$pf"
+  [ -n "$p" ] || return 0
+  if kill -0 "$p" 2>/dev/null; then
+    if [ -z "$expected" ] || grep -qa "$expected" "/proc/$p/comm" 2>/dev/null || grep -qa "$expected" "/proc/$p/cmdline" 2>/dev/null; then
+      kill "$p" 2>/dev/null
+      sleep 0.2
+      kill -9 "$p" 2>/dev/null
+    fi
+  fi
+}
+
+# never share the socket with leftovers of an earlier run
+if [ -n "${QID:-}" ]; then
+  kill_pidfile "$HP_PIDFILE" "hostpresent"
+  kill_pidfile "$Q_PIDFILE" "qemu"
+  kill_pidfile "$TMOUT_PIDFILE" "timeout"
+else
+  kill $(pidof hostpresent qemu-aarch64-ios) 2>/dev/null; sleep 0.5
+fi
+
+HP_PID=
+TPID=
+CLEANED=0
+cleanup_hp() {
+  [ "$CLEANED" -eq 1 ] && return 0
+  CLEANED=1
+  if [ -n "$TPID" ]; then
+    kill "$TPID" 2>/dev/null
+    wait "$TPID" 2>/dev/null
+    TPID=
+  fi
+  if [ -n "${QID:-}" ]; then
+    kill_pidfile "$Q_PIDFILE" "qemu"
+    kill_pidfile "$TMOUT_PIDFILE" "timeout"
+    rm -f "$CTL"
+  fi
+  if [ -n "$HP_PID" ]; then
+    kill "$HP_PID" 2>/dev/null
+    wait "$HP_PID" 2>/dev/null
+    HP_PID=
+  fi
+  if [ -n "$HP_PIDFILE" ]; then
+    rm -f "$HP_PIDFILE"
+  fi
+}
+trap cleanup_hp EXIT
+trap 'cleanup_hp; exit 130' INT
+trap 'cleanup_hp; exit 143' TERM
+
+if [ "${QPRESENT:-0}" = "1" ]; then
+  HP="$REPO/build/hostpresent"
+  if [ ! -x "$HP" ]; then
+    echo "qrun: $HP not found (run: make hostpresent)" >&2
+    exit 1
+  fi
+  HP_VSYNC=""
+  [ -n "${QVSYNC_HZ:-}" ] && HP_VSYNC="--vsync-hz $QVSYNC_HZ"
+  rm -f "$CTL"
+  if [ -n "${QID:-}" ]; then
+    "$HP" --socket "$SOCK" -c "$CTL" -o "$PNG" $HP_VSYNC > "$HP_LOG" 2>&1 &
+    HP_PID=$!
+    echo "$HP_PID" > "$HP_PIDFILE"
+  else
+    "$HP" $HP_VSYNC > "$HP_LOG" 2>&1 &
+    HP_PID=$!
+  fi
+  i=0
+  while [ $i -lt 40 ] && [ ! -p "$CTL" ]; do
+    kill -0 "$HP_PID" 2>/dev/null || break
+    sleep 0.05
+    i=$((i + 1))
+  done
+fi
+
+CARENDER_ENV=""
+if [ "${QCARENDER:-0}" = "1" ]; then
+  CARENDER_ENV="IOSWINE_CARENDER=1"
+fi
+
+if [ -n "${QID:-}" ]; then
+  rm -f "$Q_PIDFILE"
+  timeout -k 5 "$T" sh -c 'echo $$ > "$1"; shift; exec "$@"' _ "$Q_PIDFILE" \
+    env QEMU_CPU=max IOSWINE_SURFACE_SOCKET="$SOCK" IOSWINE_RENDERS_LOCALLY=1 \
+    HOME="$APP_HOME" CFFIXED_USER_HOME="$APP_HOME" TMPDIR="$APP_HOME/tmp/" \
+    IOSWINE_IOKIT=1 IOSWINE_TOUCH=1 IOSWINE_TOUCH_DIRECT=1 IOSWINE_TOUCH_TRACE=1 \
+    IOSWINE_SNAPSHOT=1 IOSWINE_SNAPSHOT_MS=50 IOSWINE_SNAPSHOT_SCALE=2 \
+    IOSWINE_NO_ANIM=1 IOSWINE_FAKEBOARD=1 IOSWINE_DSC="$D/dsc/dyld_shared_cache_arm64e" $CARENDER_ENV $QENV \
+    ${QEMU:-$HOME/bin/qemu-aarch64-ios} ./ioswine-loader "$EXE" > "$Q_LOG" 2>&1 &
+  TPID=$!
+  echo "$TPID" > "$TMOUT_PIDFILE"
+  wait "$TPID"
+  rc=$?
+  TPID=
+else
+  timeout -k 5 "$T" env QEMU_CPU=max IOSWINE_RENDERS_LOCALLY=1 HOME=$D/home/aidoku CFFIXED_USER_HOME=$D/home/aidoku \
+    TMPDIR=$D/home/aidoku/tmp/ IOSWINE_IOKIT=1 IOSWINE_TOUCH=1 IOSWINE_TOUCH_DIRECT=1 IOSWINE_TOUCH_TRACE=1 IOSWINE_TOUCH_TAP_HACK=1 PTHREAD_MUTEX_USE_ULOCK=1 IOSWINE_SNAPSHOT=1 IOSWINE_SNAPSHOT_MS=50 IOSWINE_SNAPSHOT_SCALE=2 \
+    IOSWINE_NO_ANIM=1 IOSWINE_FAKEBOARD=1 IOSWINE_DSC=$D/dsc/dyld_shared_cache_arm64e $CARENDER_ENV $QENV \
+    ${QEMU:-$HOME/bin/qemu-aarch64-ios} ./ioswine-loader "$EXE" > q.log 2>&1
+  rc=$?
+fi
+cleanup_hp
+frames=$(grep -acE '\[(snapshot|carender)\] frame ' "$Q_LOG" 2>/dev/null || true)
+echo "rc=$rc frames=${frames:-0}"
+grep -av 'api slot' "$Q_LOG" | grep -aE 'FATAL|CRASH|reason:|unimplemented' | sort | uniq -c | sort -rn | head -15

@@ -1,0 +1,7 @@
+/build/
+/logs/
+/vendor-local/
+/tools/device.env
+*.o
+*.ipsw
+__pycache__/

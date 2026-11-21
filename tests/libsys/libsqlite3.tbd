@@ -1,0 +1,18 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ arm64-ios ]
+install-name:    '/usr/lib/libsqlite3.dylib'
+current-version: 1.0
+exports:
+  - targets:     [ arm64-ios ]
+    symbols:     [ _sqlite3_open_v2,
+                   _sqlite3_close_v2,
+                   _sqlite3_close,
+                   _sqlite3_exec,
+                   _sqlite3_prepare_v2,
+                   _sqlite3_step,
+                   _sqlite3_finalize,
+                   _sqlite3_column_text,
+                   _sqlite3_column_int,
+                   _sqlite3_errmsg ]
+...

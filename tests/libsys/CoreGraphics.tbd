@@ -1,0 +1,17 @@
+--- !tapi-tbd
+tbd-version:     4
+targets:         [ arm64-ios ]
+install-name:    '/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics'
+current-version: 1965.6.3
+exports:
+  - targets:     [ arm64-ios ]
+    symbols:     [ _CGColorSpaceCreateDeviceRGB, _CGColorSpaceRelease,
+                   _CGBitmapContextCreate, _CGContextRelease,
+                   _CGContextSetRGBFillColor, _CGContextSetRGBStrokeColor,
+                   _CGContextFillRect, _CGContextFillEllipseInRect,
+                   _CGContextAddArc, _CGContextMoveToPoint, _CGContextAddLineToPoint,
+                   _CGContextStrokePath, _CGContextSetLineWidth,
+                   _CGGradientCreateWithColorComponents, _CGGradientRelease,
+                   _CGContextDrawLinearGradient, _CGBitmapContextCreateImage,
+                   _CGImageRelease ]
+...

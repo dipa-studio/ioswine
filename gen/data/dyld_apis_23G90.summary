@@ -1,0 +1,67 @@
+# dyld4::APIs vtable map summary (iOS 26.6.2 23G90 arm64e)
+
+gAPIs address:         0x1ec954040
+vtable symbol address: 0x1ee63a0f0
+Address point:         0x1ee63a100 (__ZTVN5dyld44APIsE + 16)
+Entry count:           136
+First slot:            0x1ee63a100 (index 0, offset 0x0)
+Last slot:             0x1ee63a538 (index 135, offset 0x438)
+Stopping symbol:       0x1ee63a540 (___block_descriptor_tmp)
+
+## Cross-Checks with libdyld Triage
+
+- _dlopen:
+  Triage:   offset 0x68, disc 0xbf31
+  Table:    slot 13, offset 0x68, disc 0xbf31 (dyld4::APIs::dlopen(char const*, int))
+  Status:   MATCH
+- _dlsym:
+  Triage:   offset 0x80, disc 0x839d
+  Table:    slot 16, offset 0x80, disc 0x839d (dyld4::APIs::dlsym(void*, char const*))
+  Status:   MATCH
+- __dyld_get_image_header:
+  Triage:   offset 0x18, disc 0x4bf5
+  Table:    slot 3, offset 0x18, disc 0x4bf5 (dyld4::APIs::_dyld_get_image_header(unsigned int))
+  Status:   MATCH
+- _dyld_get_program_sdk_version:
+  Triage:   offset 0x188, disc 0x6fd4
+  Table:    slot 49, offset 0x188, disc 0x6fd4 (dyld4::APIs::dyld_get_program_sdk_version())
+  Status:   MATCH
+
+## Slots Called by System Libraries Code Paths
+
+### libsystem_c
+- `__dyld_get_image_uuid`: Slot 59 (offset 0x1d8) -> dyld4::APIs::_dyld_get_image_uuid(mach_header const*, unsigned char*)
+- `__dyld_get_shared_cache_range`: Slot 63 (offset 0x1f8) -> dyld4::APIs::_dyld_get_shared_cache_range(unsigned long*)
+- `__dyld_get_shared_cache_uuid`: Slot 60 (offset 0x1e0) -> dyld4::APIs::_dyld_get_shared_cache_uuid(unsigned char*)
+- `__dyld_images_for_addresses`: Slot 74 (offset 0x250) -> dyld4::APIs::_dyld_images_for_addresses(unsigned int, void const**, dyld_image_uuid_offset*)
+- `__dyld_stack_range`: Slot 131 (offset 0x418) -> dyld4::APIs::_dyld_stack_range(void const**, void const**)
+- `__tlv_exit`: Helper or non-vtable symbol
+- `_dladdr`: Slot 12 (offset 0x60) -> dyld4::APIs::dladdr(void const*, dl_info*)
+- `_dlopen`: Slot 13 (offset 0x68) -> dyld4::APIs::dlopen(char const*, int)
+- `_dyld_image_header_containing_address`: Slot 54 (offset 0x1b0) -> dyld4::APIs::dyld_image_header_containing_address(void const*)
+
+### libsystem_malloc
+- `__dyld_get_image_header`: Slot 3 (offset 0x18) -> dyld4::APIs::_dyld_get_image_header(unsigned int)
+- `__dyld_get_image_slide`: Slot 44 (offset 0x160) -> dyld4::APIs::_dyld_get_image_slide(mach_header const*)
+- `__dyld_is_memory_immutable`: Slot 61 (offset 0x1e8) -> dyld4::APIs::_dyld_is_memory_immutable(void const*, unsigned long)
+- `_dyld_get_active_platform`: Slot 66 (offset 0x210) -> dyld4::APIs::dyld_get_active_platform()
+- `_dyld_get_program_sdk_version_token`: Slot 123 (offset 0x3d8) -> dyld4::APIs::dyld_get_program_sdk_version_token()
+- `_dyld_process_is_restricted`: Slot 51 (offset 0x198) -> dyld4::APIs::dyld_process_is_restricted()
+- `_dyld_program_sdk_at_least`: Slot 71 (offset 0x238) -> dyld4::APIs::dyld_program_sdk_at_least(dyld_build_version_t)
+- `_dyld_version_token_at_least`: Slot 126 (offset 0x3f0) -> dyld4::APIs::dyld_version_token_at_least(unsigned long long, dyld_build_version_t)
+
+### libsystem_pthread
+- `__dyld_register_for_bulk_image_loads`: Slot 82 (offset 0x290) -> dyld4::APIs::_dyld_register_for_bulk_image_loads(dyld4::ReadOnlyCallback<void (*)(unsigned int, mach_header const**, char const**)>)
+
+### libdispatch
+- `__dyld_is_memory_immutable`: Slot 61 (offset 0x1e8) -> dyld4::APIs::_dyld_is_memory_immutable(void const*, unsigned long)
+
+### libSystem.B
+- `__dyld_atfork_parent`: Slot 77 (offset 0x268) -> dyld4::APIs::_dyld_atfork_parent()
+- `__dyld_atfork_prepare`: Slot 76 (offset 0x260) -> dyld4::APIs::_dyld_atfork_prepare()
+- `__dyld_dlopen_atfork_child`: Slot 105 (offset 0x348) -> dyld4::APIs::_dyld_after_fork_dlopen_child()
+- `__dyld_dlopen_atfork_parent`: Slot 104 (offset 0x340) -> dyld4::APIs::_dyld_after_fork_dlopen_parent()
+- `__dyld_dlopen_atfork_prepare`: Slot 103 (offset 0x338) -> dyld4::APIs::_dyld_before_fork_dlopen()
+- `__dyld_fork_child`: Slot 11 (offset 0x58) -> dyld4::APIs::_dyld_fork_child()
+- `__dyld_initializer`: Helper or non-vtable symbol
+

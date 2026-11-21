@@ -1,0 +1,6 @@
+[thread] wq-create tid=0x693d prio=0x644006 workloop id=0x5014b8680 pthread=0x7d9431e000 kport=0x3903
+[thread] wq-create tid=0x694d prio=0x644005 workloop id=0x50694c800 pthread=0x7d87a94000 kport=0x5d4b
+2026-11-17 18:03:01.997 Aidoku[26919:26939] Misconfigured Device:  Default Event Timing Profile is missing (/System/Library/EventTimingProfiles/D47.Default.plist). Create empty file for a quick temporary workaround. File radar on UIKit for a permanent fix.
+[touch] selftest tab before=0 after=0
+[touch] selftest sendevent=0
+[lsk CRASH] sig=0x0000000000000004 pc=0x00000001be0214ec lr=0x00302801e2e933b0 sp=0x0000007d9453da80 fp=0x0000007d9453db20 x0=0x0000000000000000 x8=0x0000000000020012 x9=0x0000000000000001 x16=0x00000001ecc9cfc0

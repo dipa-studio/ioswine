@@ -1,0 +1,17 @@
+--- /tmp/vulkan-android.sym.orig	2026-11-12 22:24:52.861294184 +0000
++++ mesa-26.2.7/src/vulkan/vulkan-android.sym	2026-11-12 22:24:43.112293806 +0000
+@@ -5,6 +5,14 @@
+ 		# instance of struct hwvulkan_module_t.
+ 		HMI;
+ 
++		# ioswine: also export the ICD entry points so the driver can be
++		# loaded by direct dlopen + vk_icdGetInstanceProcAddr (the GPU
++		# helper process path). Stock Android Mesa exports only HMI,
++		# which makes dlsym("vk_icdGetInstanceProcAddr") fail.
++		vk_icdGetInstanceProcAddr;
++		vk_icdGetPhysicalDeviceProcAddr;
++		vk_icdNegotiateLoaderICDInterfaceVersion;
++
+ 	local:
+ 		# When static linking LLVM, all its symbols are public API.
+ 		# That may cause symbol collision, so explicitly demote everything.
